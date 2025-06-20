@@ -3,6 +3,7 @@ body{
     background-color: black;
     overflow-y: hidden;
     overflow-x: hidden;
+    margin-top: 5rem;
 }
 
 .square{
