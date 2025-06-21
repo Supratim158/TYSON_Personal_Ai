@@ -1,11 +1,26 @@
+import os
+# from pipes import quote
 import re
-from backend.command import speak
+import sqlite3
+import struct
+import subprocess
+import time
+import webbrowser
 from playsound import playsound
 import eel
-import os
+import pyaudio
+import pyautogui
+from backend.command import speak
 from backend.config import ASSISTANT_NAME
 import pywhatkit as kit
+# import pvporcupine
 
+# from backend.helper import extract_yt_term, remove_words
+# from hugchat import hugchat
+
+
+con = sqlite3.connect("tyson.db")
+cursor = con.cursor()
 
 # Playing Assistant sound func
 @eel.expose
@@ -18,41 +33,36 @@ def openCommand(query):
     query = query.replace("open", "")
     query.lower()
 
-    # app_name = query.strip()
+    app_name = query.strip()
 
-    if query != "":
-        speak("Opening "+query)
-        os.system('start '+query)
-        
-    else:
-        speak("not found")
+    if app_name != "":
 
-        # try:
-        #     cursor.execute(
-        #         'SELECT path FROM sys_command WHERE name IN (?)', (app_name,))
-        #     results = cursor.fetchall()
+        try:
+            cursor.execute(
+                'SELECT path FROM sys_command WHERE name IN (?)', (app_name,))
+            results = cursor.fetchall()
 
-        #     if len(results) != 0:
-        #         speak("Opening "+query)
-        #         os.startfile(results[0][0])
+            if len(results) != 0:
+                speak("Opening "+query)
+                os.startfile(results[0][0])
 
-        #     elif len(results) == 0: 
-        #         cursor.execute(
-        #         'SELECT url FROM web_command WHERE name IN (?)', (app_name,))
-        #         results = cursor.fetchall()
+            elif len(results) == 0: 
+                cursor.execute(
+                'SELECT url FROM web_command WHERE name IN (?)', (app_name,))
+                results = cursor.fetchall()
                 
-        #         if len(results) != 0:
-        #             speak("Opening "+query)
-        #             webbrowser.open(results[0][0])
+                if len(results) != 0:
+                    speak("Opening "+query)
+                    webbrowser.open(results[0][0])
 
-        #         else:
-        #             speak("Opening "+query)
-        #             try:
-        #                 os.system('start '+query)
-        #             except:
-        #                 speak("not found")
-        # except:
-        #     speak("some thing went wrong")
+                else:
+                    speak("Opening "+query)
+                    try:
+                        os.system('start '+query)
+                    except:
+                        speak("not found")
+        except:
+            speak("some thing went wrong")
         
 def PlayYoutube(query):
     search_term = extract_yt_term(query)
