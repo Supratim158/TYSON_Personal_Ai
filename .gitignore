@@ -1,3 +1,6 @@
 venv\
 contacts.csv
 tyson.db
+/backend/__pycache__
+/backend/cookies.json
+device.bat

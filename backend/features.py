@@ -15,9 +15,8 @@ import pyautogui
 from backend.command import speak
 from backend.config import ASSISTANT_NAME
 import pywhatkit as kit
-
 from backend.helper import extract_yt_term, remove_words
-# from hugchat import hugchat
+from hugchat import hugchat
 
 
 con = sqlite3.connect("tyson.db")
@@ -167,3 +166,48 @@ def whatsApp(mobile_no, message, flag, name):
 
     pyautogui.hotkey('enter')
     speak(tyson_message)
+
+
+# chat bot 
+def chatBot(query):
+    user_input = query.lower()
+    chatbot = hugchat.ChatBot(cookie_path="backend\cookies.json")
+    id = chatbot.new_conversation()
+    chatbot.change_conversation(id)
+    response =  chatbot.chat(user_input)
+    # print(response)
+    speak(response)
+    return response
+
+
+def makeCall(name, mobileNo):
+    mobileNo =mobileNo.replace(" ", "")
+    speak("Calling "+name)
+    command = 'adb shell am start -a android.intent.action.CALL -d tel:'+mobileNo
+    os.system(command)
+
+
+# to send message
+def sendMessage(message, mobileNo, name):
+    from backend.helper import replace_spaces_with_percent_s, goback, keyEvent, tapEvents, adbInput
+    message = replace_spaces_with_percent_s(message)
+    mobileNo = replace_spaces_with_percent_s(mobileNo)
+    speak("sending message")
+    goback(4)
+    time.sleep(1)
+    keyEvent(3)
+    # open sms app
+    tapEvents(136, 2220)
+    #start chat
+    tapEvents(819, 2192)
+    # search mobile no
+    adbInput(mobileNo)
+    #tap on name
+    tapEvents(601, 574)
+    # tap on input
+    tapEvents(390, 2270)
+    #message
+    adbInput(message)
+    #send
+    tapEvents(957, 1397)
+    speak("message send successfully to "+name)
