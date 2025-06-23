@@ -1,11 +1,4 @@
-import csv
-import sqlite3
-
-
-conn = sqlite3.connect("tyson.db")
-cursor = conn.cursor()
-
-# query = "CREATE TABLE IF NOT EXISTS sys_command(id integer primary key, name VARCHAR(100), path VARCHAR(1000))"
+ATE TABLE IF NOT EXISTS sys_command(id integer primary key, name VARCHAR(100), path VARCHAR(1000))"
 # cursor.execute(query)
 
 # query = "INSERT INTO sys_command VALUES (null,'android studio', 'C:\\Program Files\\Android\\Android Studio2\\bin\\studio64.exe')"
@@ -36,14 +29,3 @@ cursor = conn.cursor()
 # # Commit changes and close connection
 # conn.commit()
 # conn.close()
-
-# To instert one to one contacts
-# query = "INSERT INTO contacts VALUES (null,'pawan', '1234567890', 'null')"
-# cursor.execute(query)
-# conn.commit()
-
-query = 'mother'
-query = query.strip().lower()
-cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
-results = cursor.fetchall()
-print(results[0][0])

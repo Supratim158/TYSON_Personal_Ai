@@ -50,10 +50,50 @@ def allCommands():
             from backend.features import openCommand
             openCommand(query)
             
-        elif "on youtube":
+        elif "on youtube" in query:
             from backend.features import PlayYoutube
             PlayYoutube(query)
             
+            
+        elif "send message" in query or "phone call" in query or "video call" in query:
+            from backend.features import findContact, whatsApp
+            message=""
+            contact_no, name = findContact(query)
+            if(contact_no != 0):
+                # speak("Which mode you want to use whatsapp or mobile")
+                # preferance = takecommand()
+                # print(preferance)
+
+                # if "mobile" in query:
+                    if "send message" in query : 
+                        speak("what message to send")
+                        message = 'message'
+                        query = takecommand()
+                    elif "phone call" in query:
+                        message = 'call'
+                    else:
+                        message = 'video call'
+                                        
+                    whatsApp(contact_no, query, message, name)
+                    #     sendMessage(message, contact_no, name)
+                    # elif "phone call" in query:
+                    #     makeCall(name, contact_no)
+                    # else:
+                    #     speak("please try again")
+                # elif "whatsapp" in query:
+                #     message = ""
+                #     if "send message" in query:
+                #         message = 'message'
+                #         speak("what message to send")
+                #         query = takecommand()
+                                        
+                    # elif "phone call" in query:
+                    #     message = 'call'
+                    # else:
+                    #     message = 'video call'
+                                        
+                    # whatsApp(contact_no, query, message, name)
+
         else:
             print("not run")
             
