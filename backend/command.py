@@ -3,6 +3,8 @@ import pyttsx3
 import eel
 import speech_recognition as sr
 
+
+
 def speak(text):
     text = str(text)
     engine = pyttsx3.init('sapi5')
@@ -91,6 +93,14 @@ def allCommands(message = 1):
                         message = 'video call'
                                         
                     whatsApp(contact_no, query, message, name)
+                    
+        elif "click photo" in query.lower() or "take photo" in query.lower() or "take a picture" in query.lower():
+            from backend.features import clickPhoto
+            clickPhoto()
+            
+        elif "take video" in query.lower():
+            from backend.features import takeVideo
+            takeVideo()
 
         else:
             from backend.features import chatBot

@@ -197,17 +197,67 @@ def sendMessage(message, mobileNo, name):
     time.sleep(1)
     keyEvent(3)
     # open sms app
-    tapEvents(136, 2220)
+    tapEvents(353, 2220)
     #start chat
-    tapEvents(819, 2192)
+    tapEvents(830, 2230)
     # search mobile no
     adbInput(mobileNo)
     #tap on name
-    tapEvents(601, 574)
+    tapEvents(400, 786)
     # tap on input
-    tapEvents(390, 2270)
+    tapEvents(390, 2325)
     #message
     adbInput(message)
     #send
-    tapEvents(957, 1397)
+    tapEvents(980, 1350)
     speak("message send successfully to "+name)
+    
+# to click photo
+def clickPhoto():
+    from backend.helper import goback, keyEvent, tapEvents
+    import time
+
+    speak("Opening camera to click photo")
+    
+    # Go back to home screen
+    goback(4)
+    time.sleep(1)
+    keyEvent(3)  # Home key
+
+    # Tap on camera icon (coordinates may vary based on your phone layout)
+    tapEvents(900, 2200)  
+
+    time.sleep(2)  # Wait for the camera to open
+
+    # Tap on the shutter button 
+    tapEvents(535, 2052) 
+
+    speak("Photo clicked successfully")
+
+
+# to take video
+def takeVideo():
+    from backend.helper import goback, keyEvent, tapEvents
+    import time
+
+    speak("Opening camera to take video")
+    
+    # Go back to home screen
+    goback(4)
+    time.sleep(1)
+    keyEvent(3)  # Home key
+
+    # Tap on camera icon (coordinates may vary based on your phone layout)
+    tapEvents(900, 2200)  
+
+    time.sleep(2)  # Wait for the camera to open
+    
+    tapEvents(346, 1831)  
+
+    # Tap on the shutter button to start 
+    tapEvents(535, 2052) 
+    time.sleep(5)
+    # Tap on the shutter button to start
+    tapEvents(535, 2052) 
+
+    speak("video taken successfully")
